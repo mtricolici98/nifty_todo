@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-md-4 col-sm-6 col-xs-8">
+      <div class="card">
+        <div class="card-header">
+          <label class="card-title">Login</label>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+            <div class="form-group">
+              <label for="userEmail">
+                Email
+              </label>
+              <input class="form-control" id="userEmail" type="text" formControlName="email"/>
+              <div *ngIf="email.invalid && email.touched"
+                   class="alert alert-danger">
+                    <span>Email invalid</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="userPassword">
+                Password
+              </label>
+              <input class="form-control" id="userPassword" type="password"  formControlName="password"/>
+              <div *ngIf="password.invalid && password.touched"
+                   class="alert alert-info">
+                <span>Password should be at least 8 characters long</span>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-lg" type="submit">
+                Log In
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
