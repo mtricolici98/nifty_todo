@@ -17,14 +17,14 @@ class AuthController extends Controller
      *
      * @return Response
      */
-    public function login(){
-        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
+    public function login()
+    {
+        if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
-            $success['token'] =  $user->createToken('MyApp')-> accessToken;
+            $success['token'] = $user->createToken('MyApp')->accessToken;
             return response()->json(['success' => $success], 200);
-        }
-        else{
-            return response()->json(['error'=>'Unauthorised'], 401);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
         }
     }
 
@@ -43,14 +43,17 @@ class AuthController extends Controller
             'c_password' => 'required|same:password',
         ]);
         if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()], 401);
+            return response()->json(['error' => $validator->errors()], 401);
         }
         $input = $request->all();
+        if (User::where('email', $input['email'])->count()) {
+            return response()->json(['message' => 'Email already in use.'], 401);
+        }
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-        $success['token'] =  $user->createToken('MyApp')-> accessToken;
-        $success['name'] =  $user->name;
-        return response()->json(['success'=>$success], 201);
+        $success['token'] = $user->createToken('MyApp')->accessToken;
+        $success['name'] = $user->name;
+        return response()->json(['success' => $success], 201);
     }
 
 }

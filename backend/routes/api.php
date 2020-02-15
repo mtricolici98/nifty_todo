@@ -24,5 +24,7 @@ Route::middleware('auth:api')->get('/user/info', 'UserController@details');
 
 
 //TodoItem Related
-Route::middleware('auth:api')->get('/todo/get{id}', 'TodoController@get');
+Route::middleware('auth:api')->get('/todo/get?id={id}', 'TodoController@get');
 Route::middleware('auth:api')->post('/todo/create', 'TodoController@create');
+Route::middleware('auth:api')->get('/todo/list?count={count}', 'TodoController@getList');
+Route::middleware('auth:api')->get('/todo/list', 'TodoController@getList');
